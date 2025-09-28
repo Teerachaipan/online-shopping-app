@@ -16,6 +16,13 @@ watch([localPriceMin, localPriceMax], ([newMin, newMax]) => {
 // กำหนดช่วงราคาสูงสุด/ต่ำสุดแบบตายตัว
 const MAX_PRICE = 500;
 const MIN_PRICE = 0;
+
+// ตรวจสอบการเปลี่ยนแปลงจาก Store ไป Local (เมื่อกด Reset)
+watch(() => productStore.priceRange, (newRange) => {
+    // หาก Store เปลี่ยน (เช่น เมื่อมีการเรียก resetFilters) ให้อัปเดต Local Ref
+    localPriceMin.value = newRange[0];
+    localPriceMax.value = newRange[1];
+}, { immediate: true }); // immediate: true เพื่อให้ตั้งค่าเริ่มต้นเมื่อโหลดครั้งแรก
 </script>
 
 <template>
