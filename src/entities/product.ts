@@ -8,8 +8,16 @@ export interface Product {
 }
 
 export interface CartItem extends Product {
-  /** จำนวนสินค้าชิ้นนี้ในตะกร้า (Quantity) */
   quantity: number
-  /** ราคารวมของสินค้าชิ้นนี้ (Price * Quantity) */
   total_item_price: number
+}
+
+export interface OrderDetail {
+  orderId: string
+  items: CartItem[]
+  subTotal: number
+  finalDiscount: number
+  deliveryFee: number
+  finalTotalAmount: number
+  createdAt: number
 }

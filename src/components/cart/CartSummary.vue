@@ -32,15 +32,23 @@ const handleCheckout = () => {
 
   if (confirm('ยืนยันเพื่อดำเนินการชำระเงินและสร้าง Order ID หรือไม่?')) {
 
-    // 1. Generate Order ID
-    // การสร้าง Order ID แบบง่าย: ใช้ Timestamp
+    // 1. Generate Order ID (ต้องเป็นตัวเลข/string ที่ไม่ซ้ำ)
     const orderId = Date.now().toString();
 
-    // 2. Implement a popup message to notify users when an order is successfully created.
-    alert(`🎉 Order ID: ${orderId} ถูกสร้างสำเร็จแล้ว! กำลังนำไปหน้าชำระเงิน`);
+    // 2.createOrder เพื่อบันทึกข้อมูล Order ลงใน Local Storage
+    try {
+        const order = cartStore.createOrder(orderId); // เรียกใช้ฟังก์ชันบันทึก
 
-    // 3. Redirect to Checkout Page
-    router.push({ name: 'Checkout', params: { orderId: orderId } });
+        // 3. Implement a popup message
+         alert(`🎉 Order ID: ${order.orderId} ถูกสร้างสำเร็จแล้ว! กำลังนำไปหน้าชำระเงิน`);
+
+        // 4. Redirect to Checkout Page
+        router.push({ name: 'checkout', params: { orderId: order.orderId } });
+
+    } catch (error) {
+        console.error("Error creating order:", error);
+        alert("เกิดข้อผิดพลาดในการสร้างคำสั่งซื้อ กรุณาลองใหม่");
+    }
   }
 };
 </script>
