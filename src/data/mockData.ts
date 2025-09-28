@@ -1,5 +1,3 @@
-// src/data/mockData.ts
-
 import type { Product } from '@/entities/product'
 import type { AppConfig } from '@/entities/config'
 

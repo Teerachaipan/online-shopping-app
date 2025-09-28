@@ -13,7 +13,7 @@ watch([localPriceMin, localPriceMax], ([newMin, newMax]) => {
   productStore.priceRange = [newMin, newMax];
 });
 
-// กำหนดช่วงราคาสูงสุด/ต่ำสุดแบบตายตัว (สามารถทำให้ dynamic ได้ ถ้าต้องการ)
+// กำหนดช่วงราคาสูงสุด/ต่ำสุดแบบตายตัว
 const MAX_PRICE = 500;
 const MIN_PRICE = 0;
 </script>
@@ -25,7 +25,7 @@ const MIN_PRICE = 0;
     </h3>
 
     <div class="mb-6">
-      <h4 class="font-semibold text-lg mb-2">ช่วงราคา (Price Range)</h4>
+      <h4 class="font-semibold text-lg mb-2 text-gray-900">ช่วงราคา (Price Range)</h4>
       <p class="text-sm text-gray-500 mb-2">
         ฿{{ localPriceMin.toFixed(2) }} - ฿{{ localPriceMax.toFixed(2) }}
       </p>
@@ -54,7 +54,7 @@ const MIN_PRICE = 0;
     </div>
 
     <div class="mb-6 border-t pt-4">
-      <h4 class="font-semibold text-lg mb-3">แบรนด์ (Brand)</h4>
+      <h4 class="font-semibold text-lg mb-3 text-gray-900">แบรนด์ (Brand)</h4>
 
       <div v-for="brand in productStore.availableBrands" :key="brand" class="mb-2">
         <label class="inline-flex items-center">

@@ -15,11 +15,7 @@ export const useCartStore = defineStore('cart', () => {
   const promotionCode = ref('')
   const appliedDiscount = ref(0)
 
-  // --- Actions/Mutations ---
-
-  /**
-   * เพิ่มสินค้าลงในตะกร้า หรือเพิ่มปริมาณหากมีอยู่แล้ว
-   */
+  // เพิ่มสินค้าลงในตะกร้า หรือเพิ่มปริมาณหากมีอยู่แล้ว
   function addToCart(product: Product) {
     const existingItem = items.value.find((item) => item.sku === product.sku)
 
@@ -34,7 +30,6 @@ export const useCartStore = defineStore('cart', () => {
         total_item_price: product.price * 1,
       })
     }
-    // 💡 Note: ใน production, ควรเรียกใช้ Notification Service ที่นี่แทน alert
     console.log(`Product SKU ${product.sku} added to cart.`)
   }
 
@@ -118,12 +113,13 @@ export const useCartStore = defineStore('cart', () => {
     deliveryFee,
     finalDiscount,
     finalTotalAmount,
+    appliedDiscount,
 
     // Actions/Mutations
     addToCart,
     updateQuantity,
     removeFromCart,
     applyPromotion,
-    formatCurrency, // Export utility function สำหรับใช้ใน component
+    formatCurrency,
   }
 })
