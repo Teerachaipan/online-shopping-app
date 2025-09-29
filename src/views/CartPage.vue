@@ -5,16 +5,12 @@ import { useCartStore } from '@/stores/cartStore';
 import { useProductStore } from '@/stores/productStore';
 import CartItemRow from '@/components/cart/CartItemRow.vue';
 import CartSummary from '@/components/cart/CartSummary.vue';
-import ProductCard from '@/components/home/ProductCard.vue'; // ใช้ ProductCard ซ้ำสำหรับ Recommended
+import ProductCard from '@/components/home/ProductCard.vue';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
 const cartStore = useCartStore();
 const productStore = useProductStore();
-
-// ------------------------------------------------
-// Recommended Section Logic
-// ------------------------------------------------
 
 // SKU ของสินค้าที่มีอยู่ในตะกร้าแล้ว
 const cartSkus = computed(() => cartStore.items.map(item => item.sku));
@@ -24,7 +20,6 @@ const recommendedProducts = computed(() => {
   return productStore.allProducts.filter(p => !cartSkus.value.includes(p.sku));
 });
 
-// ฟังก์ชันกลับไปหน้า Home
 const goBack = () => {
   router.push({ name: 'home' });
 };

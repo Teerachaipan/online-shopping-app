@@ -4,11 +4,11 @@ import { ref, watch } from 'vue';
 
 const productStore = useProductStore();
 
-// ใช้ local ref สำหรับ Price Range Slider เพื่อประสิทธิภาพ
+// Price Range Slider
 const localPriceMin = ref(productStore.priceRange[0]);
 const localPriceMax = ref(productStore.priceRange[1]);
 
-// watch เพื่อซิงค์กับ Pinia เมื่อ local refs เปลี่ยนแปลง
+
 watch([localPriceMin, localPriceMax], ([newMin, newMax]) => {
   productStore.priceRange = [newMin, newMax];
 });
@@ -19,10 +19,9 @@ const MIN_PRICE = 0;
 
 // ตรวจสอบการเปลี่ยนแปลงจาก Store ไป Local (เมื่อกด Reset)
 watch(() => productStore.priceRange, (newRange) => {
-    // หาก Store เปลี่ยน (เช่น เมื่อมีการเรียก resetFilters) ให้อัปเดต Local Ref
     localPriceMin.value = newRange[0];
     localPriceMax.value = newRange[1];
-}, { immediate: true }); // immediate: true เพื่อให้ตั้งค่าเริ่มต้นเมื่อโหลดครั้งแรก
+}, { immediate: true });
 </script>
 
 <template>

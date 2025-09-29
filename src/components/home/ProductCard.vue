@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { useCartStore } from '@/stores/cartStore';
-// import type { Product } from '@/types/product';
 import type { Product } from '@/entities/product'
-import { ShoppingBagIcon } from '@heroicons/vue/24/outline'; // สำหรับไอคอน (ต้องติดตั้ง Heroicons)
+import { ShoppingBagIcon } from '@heroicons/vue/24/outline';
 
-// 1. กำหนด Props
 const props = defineProps<{
   product: Product;
 }>();
 
-// 2. ใช้ Cart Store
 const cartStore = useCartStore();
 
-// 3. ฟังก์ชันสำหรับเพิ่มสินค้าลงตะกร้า
+// ฟังก์ชันสำหรับเพิ่มสินค้าลงตะกร้า
 const handleAddToCart = () => {
   cartStore.addToCart(props.product);
-  // 💡 Note: Logic สำหรับ Popup Message/Toast จะถูกเรียกใช้ใน Cart Store
-  // หรืออาจจะเรียกใช้ Notification Service จากที่นี่
   alert(`สินค้า "${props.product.name}" ถูกเพิ่มลงในตะกร้าแล้ว!`);
 };
 </script>

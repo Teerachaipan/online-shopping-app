@@ -6,8 +6,6 @@ import QrcodeVue from 'qrcode.vue';
 import { HomeIcon } from '@heroicons/vue/24/outline';
 import type { OrderDetail } from '@/entities/product';
 
-
-// รับค่า Prop orderId
 const props = defineProps<{
   orderId: string;
 }>();
@@ -18,12 +16,10 @@ const cartStore = useCartStore();
 const order = ref<OrderDetail | null>(null);
 
 onMounted(() => {
-  // ดึงข้อมูล Order จาก Store
   const foundOrder = cartStore.getOrderById(props.orderId);
   if (foundOrder) {
     order.value = foundOrder;
   } else {
-    // หากไม่พบ Order (เช่น รีเฟรชหน้า), ให้แจ้งเตือนและกลับไป Home
     alert('ไม่พบข้อมูลคำสั่งซื้อที่ระบุ กรุณาลองใหม่อีกครั้ง');
     router.replace({ name: 'home' });
   }
@@ -33,15 +29,13 @@ onMounted(() => {
 const qrCodeUrl = computed(() => {
   if (!order.value) return '';
   const baseUrl = 'https://payment-api.yimpla[orm.com/orders';
-  const price = order.value.finalTotalAmount.toFixed(2); // ต้องใช้ทศนิยม 2 ตำแหน่ง
+  const price = order.value.finalTotalAmount.toFixed(2);
 
   return `${baseUrl}/${order.value.orderId}/checkout?price=${price}`;
 });
 
-// ฟังก์ชันกลับไปหน้า Home
 const goToHome = () => {
   if (order.value) {
-        // 🆕 เมื่อกลับไป Home ให้ลบ Order นี้ออกจาก Local Storage
         cartStore.clearOrderFromStorage(order.value.orderId);
     }
   router.push({ name: 'home' });

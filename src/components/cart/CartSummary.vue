@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cartStore';
+import { generateOrderId } from '@/utils/format'
 
 const cartStore = useCartStore();
 const router = useRouter();
@@ -19,7 +20,6 @@ const handleApplyPromotion = () => {
     alert('✅ ใช้รหัสโปรโมชั่นสำเร็จ! ได้รับส่วนลด ฿100.00');
   } else {
     promoError.value = 'รหัสโปรโมชั่นไม่ถูกต้องหรือไม่สามารถใช้ได้';
-    // cartStore.appliedDiscount = 0; // ใน store: appliedDiscount จะถูกรีเซ็ตใน applyPromotion()
   }
 };
 
@@ -32,17 +32,13 @@ const handleCheckout = () => {
 
   if (confirm('ยืนยันเพื่อดำเนินการชำระเงินและสร้าง Order ID หรือไม่?')) {
 
-    // 1. Generate Order ID (ต้องเป็นตัวเลข/string ที่ไม่ซ้ำ)
-    const orderId = Date.now().toString();
+    const orderId = generateOrderId()
 
-    // 2.createOrder เพื่อบันทึกข้อมูล Order ลงใน Local Storage
     try {
-        const order = cartStore.createOrder(orderId); // เรียกใช้ฟังก์ชันบันทึก
+        const order = cartStore.createOrder(orderId);
 
-        // 3. Implement a popup message
-         alert(`🎉 Order ID: ${order.orderId} ถูกสร้างสำเร็จแล้ว! กำลังนำไปหน้าชำระเงิน`);
+        alert(`🎉 Order ID: ${order.orderId} ถูกสร้างสำเร็จแล้ว! กำลังนำไปหน้าชำระเงิน`);
 
-        // 4. Redirect to Checkout Page
         router.push({ name: 'checkout', params: { orderId: order.orderId } });
 
     } catch (error) {

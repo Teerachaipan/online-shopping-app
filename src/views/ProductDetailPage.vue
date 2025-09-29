@@ -5,9 +5,8 @@ import { useProductStore } from '@/stores/productStore';
 import { useCartStore } from '@/stores/cartStore';
 import { ArrowLeftIcon, ShoppingBagIcon, ShoppingCartIcon } from '@heroicons/vue/24/outline'; // นำเข้าไอคอนที่จำเป็น
 
-// รับค่า Prop sku (ที่ตั้งค่าจาก Router props: true)
 const props = defineProps<{
-  sku: string; // SKU ถูกส่งมาเป็น string จาก URL
+  sku: string;
 }>();
 
 const router = useRouter();
@@ -20,14 +19,9 @@ const product = computed(() => {
   return productStore.allProducts.find(p => p.sku === productSku);
 });
 
-// ------------------------------------------------
-// Product Image Section Logic
-// ------------------------------------------------
-
 // สถานะสำหรับการแสดงภาพ (ค่าเริ่มต้นคือ 0 = ภาพแรก)
 const currentImageIndex = ref(0);
 
-// ภาพขนาดใหญ่ที่แสดงผล
 const mainImage = computed(() => {
   return product.value?.image_url[currentImageIndex.value] || '';
 });
@@ -37,29 +31,21 @@ const thumbnailImages = computed(() => {
   return product.value?.image_url.slice(0, 3) || [];
 });
 
-// ------------------------------------------------
-// Functionality
-// ------------------------------------------------
-
 // ฟังก์ชันเพิ่มสินค้าลงตะกร้า (อัปเดต Cart Store + Popup)
 const handleAddToCart = () => {
   if (product.value) {
     cartStore.addToCart(product.value);
-    // Implement a popup message to notify users
     alert(`🛒 สินค้า "${product.value.name}" ถูกเพิ่มลงในตะกร้าแล้ว!`);
   }
 };
 
-// ฟังก์ชันกลับไปหน้า Home
 const goBack = () => {
-  router.push({ name: 'home' }); // นำทางไป Home Page
+  router.push({ name: 'home' });
 };
 
-// จัดการกรณีที่ไม่พบสินค้า
 onMounted(() => {
   if (!product.value) {
     console.error(`Product with SKU ${props.sku} not found.`);
-    // หากไม่พบสินค้า ให้ redirect ไป Home
     router.replace({ name: 'home' });
   }
 });

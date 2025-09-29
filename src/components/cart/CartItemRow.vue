@@ -9,11 +9,10 @@ const props = defineProps<{
 
 const cartStore = useCartStore();
 
-// ฟังก์ชันสำหรับปรับปริมาณ
+// ฟังก์ชันสำหรับ update qty
 const updateQty = (delta: number) => {
   const newQty = props.item.quantity + delta;
   cartStore.updateQuantity(props.item.sku, newQty);
-  //ถ้าปริมาณเป็น 0 คุณอาจต้องการยืนยันการลบ
 };
 
 // ฟังก์ชันสำหรับลบสินค้า
