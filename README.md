@@ -43,3 +43,20 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+### Git URL Repository
+
+```sh
+git clone [\[YOUR_REPOSITORY_URL\] online-shopping-app](https://github.com/Teerachaipan/online-shopping-app.git)
+```
+
+# Vue Tech Stack
+
+- v.3.18.0
+- Composition API
+- TypeScript
+- State Management Pinia
+- Tailwind CSS
+- Vite
+- Vue Router
+- qrcode.vue
